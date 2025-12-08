@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PACKAGE_NAME: database
+      PACKAGE_NAME: sample.database
 
     steps:
       - name: Checkout repo
@@ -28,7 +28,7 @@ jobs:
       - name: Zip src/Database directory
         run: |
           mkdir -p build
-          zip -r build/${PACKAGE_NAME}-${VERSION}.zip src/Database
+          zip -r build/${PACKAGE_NAME}.${VERSION}.zip src/Database
 
       # ------------------------------
       # Push package to Octopus Deploy
@@ -37,7 +37,7 @@ jobs:
         uses: OctopusDeploy/push-package-action@v3.0.4
         with:
           packages: |
-            build/${{ env.PACKAGE_NAME }}-${{ env.VERSION }}.zip
+            build/${{ env.PACKAGE_NAME }}.${{ env.VERSION }}.zip
           api_key: ${{ secrets.OCTOPUS_API_KEY }}
           server: ${{ secrets.OCTOPUS_URL }}
           space: ${{ secrets.OCTOPUS_SPACE_ID }}
@@ -54,4 +54,4 @@ jobs:
           version: ${{ env.VERSION }}
           api_key: ${{ secrets.OCTOPUS_API_KEY }}
           server: ${{ secrets.OCTOPUS_URL }}
-          space: 'Spaces-63'
+          space: ${{ secrets.OCTOPUS_SPACE_ID }}
