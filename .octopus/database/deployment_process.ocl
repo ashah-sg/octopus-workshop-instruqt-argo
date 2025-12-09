@@ -39,4 +39,8 @@ process_template "run-a-process-template" {
     parameter "paramater.review.environement" {
         value = "Environments-84"
     }
+
+    parameter "parameter.package.path" {
+        value = "filesystem:#{Octopus.Action.Package[Flyway.Package.Value].ExtractedPath}/src/Database"
+    }
 }
